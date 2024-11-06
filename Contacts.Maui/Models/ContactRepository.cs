@@ -46,7 +46,6 @@ namespace Contacts.Maui.Models
                 contactToUpdate.Email = contact.Email;
                 contactToUpdate.Phone = contact.Phone;
             }
-
         }
 
         public static void AddContact(Contact contact)

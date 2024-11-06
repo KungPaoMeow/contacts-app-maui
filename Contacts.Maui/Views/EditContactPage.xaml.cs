@@ -1,4 +1,5 @@
 using Contacts.Maui.Models;
+using Contacts.UseCases.Interfaces;
 using Contact = Contacts.Maui.Models.Contact;
 
 namespace Contacts.Maui.Views;
@@ -6,12 +7,15 @@ namespace Contacts.Maui.Views;
 [QueryProperty(nameof(ContactId), "Id")]
 public partial class EditContactPage : ContentPage
 {
-    private Contact _contact;
+    private CoreBuisness.Contact _contact;
+    private readonly IViewContactUseCase viewContactUseCase;
+    private readonly IEditContactUseCase editContactUseCase;
 
     public string ContactId { 
         set
         {
-            _contact = ContactRepository.GetContactById(int.Parse(value));
+            _contact = this.viewContactUseCase.ExecuteAsync(int.Parse(value)).GetAwaiter().GetResult();
+
             if (_contact != null)
             {
                 contactCtrl.Name = _contact.Name;
@@ -19,14 +23,15 @@ public partial class EditContactPage : ContentPage
                 contactCtrl.Email = _contact.Email;
                 contactCtrl.Phone = _contact.Phone;
             }
-            //lblName.Text = _contact.Name;
         } 
     }
 
-    public EditContactPage()
+    public EditContactPage(IViewContactUseCase viewContactUseCase, IEditContactUseCase editContactUseCase)
 	{
 		InitializeComponent();
-	}
+        this.viewContactUseCase = viewContactUseCase;
+        this.editContactUseCase = editContactUseCase;
+    }
 
     private void btnCancel_Clicked(object sender, EventArgs e)
     {
@@ -34,15 +39,15 @@ public partial class EditContactPage : ContentPage
         Shell.Current.GoToAsync($"//{nameof(ContactsPage)}");
     }
 
-    private void btnUpdate_Clicked(object sender, EventArgs e)
+    private async void btnUpdate_Clicked(object sender, EventArgs e)
     {
         _contact.Name = contactCtrl.Name;
         _contact.Address = contactCtrl.Address;
         _contact.Email = contactCtrl.Email;
         _contact.Phone = contactCtrl.Phone;
-            
-        ContactRepository.UpdateContact(_contact.ContactId, _contact);
-        Shell.Current.GoToAsync("..");
+
+        await this.editContactUseCase.ExecuteAsync(_contact.ContactId, _contact);
+        await Shell.Current.GoToAsync("..");
     }
 
     private void contactCtrl_OnError(object sender, string e)

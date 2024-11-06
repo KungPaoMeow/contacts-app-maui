@@ -1,4 +1,9 @@
 ﻿using CommunityToolkit.Maui;
+using Contacts.Maui.Views;
+using Contacts.Plugins.DataStore.InMemory;
+using Contacts.UseCases;
+using Contacts.UseCases.Interfaces;
+using Contacts.UseCases.PluginInterfaces;
 using Microsoft.Extensions.Logging;
 
 namespace Contacts.Maui
@@ -20,6 +25,19 @@ namespace Contacts.Maui
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+
+            // Dependency injection mapping
+            builder.Services.AddSingleton<IContactRepository, ContactInMemoryRepository>();     // live for life of whole application
+            builder.Services.AddSingleton<IViewContactsUseCase, ViewContactsUseCase>();
+            builder.Services.AddSingleton<IViewContactUseCase, ViewContactUseCase>();
+            builder.Services.AddTransient<IEditContactUseCase, EditContactUseCase>();       // does not need to always be active, can be used on as needed basis
+            builder.Services.AddTransient<IAddContactUseCase, AddContactUseCase>();
+            builder.Services.AddTransient<IDeleteContactUseCase, DeleteContactUseCase>();
+
+            // because .NET MAUI only knows how to create instance of a page with default ctor
+            builder.Services.AddSingleton<ContactsPage>();
+            builder.Services.AddSingleton<EditContactPage>();
+            builder.Services.AddSingleton<AddContactPage>();
 
             return builder.Build();
         }

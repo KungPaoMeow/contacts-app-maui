@@ -1,15 +1,20 @@
 using Contacts.Maui.Models;
+using Contacts.UseCases.Interfaces;
 using System.Collections.ObjectModel;
-using Contact = Contacts.Maui.Models.Contact;
+using Contact = Contacts.CoreBuisness.Contact;
 
 namespace Contacts.Maui.Views;
 
 public partial class ContactsPage : ContentPage
 {
-    public ContactsPage()
+    private readonly IViewContactsUseCase _viewContactsUseCase;
+    private readonly IDeleteContactUseCase deleteContactUseCase;
+
+    public ContactsPage(IViewContactsUseCase viewContactsUseCase, IDeleteContactUseCase deleteContactUseCase)
     {
         InitializeComponent();
-
+        this._viewContactsUseCase = viewContactsUseCase;
+        this.deleteContactUseCase = deleteContactUseCase;
     }
 
     protected override void OnAppearing()
@@ -37,23 +42,26 @@ public partial class ContactsPage : ContentPage
         Shell.Current.GoToAsync(nameof(AddContactPage));
     }
 
-    private void Delete_Clicked(object sender, EventArgs e)
+    private async void Delete_Clicked(object sender, EventArgs e)
     {
         MenuItem menuItem = sender as MenuItem;
         Contact contact = menuItem.CommandParameter as Contact;
-        ContactRepository.DeleteContact(contact.ContactId);
+        //ContactRepository.DeleteContact(contact.ContactId);
+        await deleteContactUseCase.ExecuteAsync(contact.ContactId);
+
         LoadContacts();
     }
 
-    private void LoadContacts()     // Refresh list view
+    private async void LoadContacts()     // Refresh list view
     {
-        ObservableCollection<Contact> contacts = new ObservableCollection<Contact>(ContactRepository.GetContacts());    // views subscribe to observable data they contain
+        ObservableCollection<Contact> contacts = new ObservableCollection<Contact>(await this._viewContactsUseCase.ExecuteAsync(string.Empty));    // views subscribe to observable data they contain
         listContacts.ItemsSource = contacts;
     }
 
-    private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+    private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {
-        ObservableCollection<Contact> contacts = new ObservableCollection<Contact>(ContactRepository.SearchContacts(((SearchBar) sender).Text));
+        //ObservableCollection<Contact> contacts = new ObservableCollection<Contact>(ContactRepository.SearchContacts(((SearchBar) sender).Text));
+        ObservableCollection<Contact> contacts = new ObservableCollection<Contact>(await this._viewContactsUseCase.ExecuteAsync(((SearchBar)sender).Text));
         listContacts.ItemsSource = contacts;
     }
 }
