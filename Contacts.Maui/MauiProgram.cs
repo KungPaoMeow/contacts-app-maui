@@ -3,6 +3,7 @@ using Contacts.Maui.ViewModels;
 using Contacts.Maui.Views;
 using Contacts.Maui.Views_MVVM;
 using Contacts.Plugins.DataStore.InMemory;
+using Contacts.Plugins.DataStore.SQLLite;
 using Contacts.UseCases;
 using Contacts.UseCases.Interfaces;
 using Contacts.UseCases.PluginInterfaces;
@@ -29,7 +30,8 @@ namespace Contacts.Maui
 #endif
 
             // Dependency injection mapping
-            builder.Services.AddSingleton<IContactRepository, ContactInMemoryRepository>();     // live for life of whole application
+            //builder.Services.AddSingleton<IContactRepository, ContactInMemoryRepository>();     // live for life of whole application
+            builder.Services.AddSingleton<IContactRepository, ContactSQLiteRepository>();
             builder.Services.AddSingleton<IViewContactsUseCase, ViewContactsUseCase>();
             builder.Services.AddSingleton<IViewContactUseCase, ViewContactUseCase>();
             builder.Services.AddTransient<IEditContactUseCase, EditContactUseCase>();       // does not need to always be active, can be used on as needed basis
