@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.Plugins.DataStore.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.Plugins.DataStore.SQLite", "Plugins\Contacts.Plugins.DataStore.SQLLite\Contacts.Plugins.DataStore.SQLite.csproj", "{99E3344D-EEDA-48F7-A6F7-91AF671C87E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.WebApi", "Contacts.WebApi\Contacts.WebApi.csproj", "{475C0593-E186-48E7-9279-49D6E6621C04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.Plugins.DataStore.WebApi", "Plugins\Contacts.Plugins.DataStore.WebApi\Contacts.Plugins.DataStore.WebApi.csproj", "{EDFA99FE-8131-4FEA-BF18-094D700F2781}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,14 @@ Global
 		{99E3344D-EEDA-48F7-A6F7-91AF671C87E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99E3344D-EEDA-48F7-A6F7-91AF671C87E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99E3344D-EEDA-48F7-A6F7-91AF671C87E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{475C0593-E186-48E7-9279-49D6E6621C04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{475C0593-E186-48E7-9279-49D6E6621C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{475C0593-E186-48E7-9279-49D6E6621C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{475C0593-E186-48E7-9279-49D6E6621C04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDFA99FE-8131-4FEA-BF18-094D700F2781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDFA99FE-8131-4FEA-BF18-094D700F2781}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDFA99FE-8131-4FEA-BF18-094D700F2781}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDFA99FE-8131-4FEA-BF18-094D700F2781}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +62,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5F2C1CCA-6DE8-4523-AF29-838A77E633EA} = {5668EF89-CA62-4D72-8F3A-3300BD7624BC}
 		{99E3344D-EEDA-48F7-A6F7-91AF671C87E8} = {5668EF89-CA62-4D72-8F3A-3300BD7624BC}
+		{EDFA99FE-8131-4FEA-BF18-094D700F2781} = {5668EF89-CA62-4D72-8F3A-3300BD7624BC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F5D9D22-1D57-490A-AC14-435A4D80503D}
